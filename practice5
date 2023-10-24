@@ -1,0 +1,135 @@
+from random import randrange
+
+def createOctet(start=0, end=255):
+    ''' create an octet between start and end, inclusive and return it. '''
+
+    octet=randrange(start, end+1)  # randrange doesn't include the value of 2nd arg
+
+    return octet
+
+def generateRandomIP():
+    ''' Generate a random IP address between 1-223 for the first octet
+        and 0-255 for the other 3 octets and return it.
+    '''
+
+    print("In generateRandomIP")
+
+    octet1=createOctet(1,223)
+    octet2=createOctet(0,255)
+    octet3=createOctet()
+    octet4=createOctet()
+    
+    randomIP=str(octet1)+"."+str(octet2)+"."+str(octet3)+"."+str(octet4)
+
+    return randomIP
+
+def whatClass(address):  # address example:  "223.255.0.0"
+    ''' Given address, determine whether it is in Class A, B or C and return
+        this class's letter.
+    '''
+
+    print("In whatClass")
+
+    # isolate first octet by splitting address into the 4 octets
+    octets=address.split(".")  # ["223", "255", "0", "0"]
+
+    # get the first octet
+    firstOctet=int(octets[0])  # "223" -> 223
+
+    # determine what class first octet is in
+    if(firstOctet>=1 and firstOctet<=127):
+        classValue="A"
+    elif(firstOctet>=128 and firstOctet<=191):
+        classValue="B"
+    elif(firstOctet>=192 and firstOctet<=223):
+        classValue="C"
+    else:
+        classValue="ERROR!"
+        
+    return classValue
+
+def whatSM(address):
+    '''
+
+    '''
+
+    print("In whatSM")
+    
+
+    sm="255.0.0.0"
+
+    return sm
+
+
+def option1():
+
+    print("In option 1")
+
+    finished=False
+
+    while(not finished):
+        # Generate IP address and correct class
+        ip=generateRandomIP()
+        correctAnswer=whatClass(ip)
+
+        answer=""
+
+        # Reprompt if no answer
+        while(answer==""):
+            # Display to the user
+            answer=input("What class (A, B, C) is "+ip+"(q=quit)?  ")
+
+        # Check if answer is correct, incorrect or if its "q"
+        if(answer==correctAnswer):
+            print("Correct!")
+        elif(answer.lower()=="q"):
+            finished=True
+        else:
+            print("Incorrect.  The correct answer is:  "+correctAnswer)
+        
+    
+
+def option2():
+
+    print("In option 2")
+    ip=generateRandomIP()
+    print(ip)
+
+def compares(value1, value2):
+    ''' Compare value1 and value2.  If value1=value2, return True otherwise
+        return False
+    '''
+
+    if(value1==value2):
+        answer=True
+    else:
+        answer=False
+
+    return answer
+
+def mainMenu():
+    print("In main menu")
+
+    answer=input("Choice:  ")
+
+    return answer
+
+def main():
+    choice="" # Empty string as there really is no choice yet.
+
+    # Allow user to continue choosing option 1 or option 2 unless chose option 3.
+    while(choice != "3"):
+        choice=mainMenu()
+        choice=choice.strip()
+
+        # Do the option the user chooses (1 or 2)
+        if(choice=="1"):
+            option1()
+        elif(choice=="2"):
+            option2()
+    
+
+if(__name__=="__main__"):
+    main()
+
+
