@@ -11,8 +11,7 @@ def generateRandomIP():
     ''' Generate a random IP address between 1-223 for the first octet
         and 0-255 for the other 3 octets and return it.
     '''
-
-    print("In generateRandomIP")
+   
 
     octet1=createOctet(1,223)
     octet2=createOctet(0,255)
@@ -28,7 +27,7 @@ def whatClass(address):  # address example:  "223.255.0.0"
         this class's letter.
     '''
 
-    print("In whatClass")
+    
 
     # isolate first octet by splitting address into the 4 octets
     octets=address.split(".")  # ["223", "255", "0", "0"]
@@ -55,15 +54,23 @@ def whatSM(address):
 
     print("In whatSM")
     
+    classAnswer=whatClass(address)
 
-    sm="255.0.0.0"
-
+    if(classAnswer=="A"):
+        sm="255.0.0.0"
+    elif(classAnswer=="B"):
+        sm="255.255.0.0"
+    elif(classAnswer=="C"):
+        sm="255.255.255.0"
+    else:
+        sm="ERROR"
+        
     return sm
 
 
 def option1():
 
-    print("In option 1")
+    
 
     finished=False
 
@@ -91,10 +98,27 @@ def option1():
 
 def option2():
 
-    print("In option 2")
-    ip=generateRandomIP()
-    print(ip)
+    
 
+    finished=False
+
+    while(not finished):
+        ip=generateRandomIP()
+        correctAnswer2=whatSM(ip)
+        
+        answer2=""
+    
+        while answer2=="":
+            answer2=input("What is the default subnet mask for "+ip+" (q=quit)?  ")
+        if(answer2==correctAnswer2):
+            print("Correct!")
+        elif(answer.lower()=="q"):
+            finished=True
+        else:
+            print("Incorrect. The correct answer is:  "+correctAnswer2)
+    
+    print(ip)
+    
 def compares(value1, value2):
     ''' Compare value1 and value2.  If value1=value2, return True otherwise
         return False
